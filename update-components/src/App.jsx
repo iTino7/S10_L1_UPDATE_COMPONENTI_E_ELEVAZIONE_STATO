@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import MyNav from "./components/MyNav";
+import Welcome from "./components/Welcome";
+import MyFooter from "./components/MyFooter";
 
-function App() {
-  const [count, setCount] = useState(0)
+import fantasy from "./data/fantasy.json";
+import history from "./data/history.json";
+import horror from "./data/horror.json";
+import romance from "./data/romance.json";
+import scifi from "./data/scifi.json";
+import BookList from "./components/BookList";
+import { Container, Dropdown } from "react-bootstrap";
+import { Component } from "react";
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+class App extends Component {
+  state = {
+    books: horror,
+  };
+
+  render() {
+    return (
+      <>
+        <MyNav />
+        <Welcome title="Libri" />
+        <Container>
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              Libri disponibili
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => this.setState({ books: horror })}>
+                Horror
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => this.setState({ books: romance })}>
+                Romance
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => this.setState({ books: fantasy })}>
+                fantasy
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => this.setState({ books: history })}>
+                history
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => this.setState({ books: scifi })}>
+                scifi
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Container>
+        <BookList book={this.state.books} />
+        <MyFooter title="React" />
+      </>
+    );
+  }
 }
 
-export default App
+export default App;
